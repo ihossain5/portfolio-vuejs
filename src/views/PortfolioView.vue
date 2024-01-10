@@ -1,16 +1,34 @@
 <script>
-import { ref, reactive } from "vue";
+import { ref, onMounted } from "vue";
+import apiClient from "@/axios";
+
 
 export default {
   setup() {
     const selectedCategory = ref("All");
 
-    const projects = reactive([
-      { title: "Finance", category: "Web development", image:"https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-3.jpg" },
-      { title: "Orizon", category: "Web development", image: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-3.jpg" },
-      { title: "Fundo", category: "Web design", image: "https://codewithsadee.github.io/vcard-personal-portfolio/assets/images/project-3.jpg" },
+    const projects = ref({});
+    const error = ref(null);
+    const loading = ref(true);
 
-    ]);
+
+    const fetchData = async () => {
+      try {
+        const response = await apiClient.get("/projects");
+        projects.value = response.data;
+      } catch (e) {
+        error.value = e;
+      } finally {
+        loading.value = false;
+      }
+    };
+
+
+    onMounted(() => {
+      setTimeout(() => {
+        fetchData();
+      });
+    });
 
     const selectCategory = (category) => {
       selectedCategory.value = category;
@@ -41,7 +59,7 @@ export default {
     </header>
 
     <section class="projects">
-      <ul class="filter-list">
+      <!-- <ul class="filter-list">
         <li
           v-for="category in [
             'All',
@@ -60,8 +78,7 @@ export default {
             {{ category }}
           </button>
         </li>
-      </ul>
-     
+      </ul> -->
 
       <ul class="project-list">
         <li
@@ -73,14 +90,10 @@ export default {
           <a v-if="filterProjects(project)" href="#">
             <figure class="project-img">
               <div class="project-item-icon-box">
-                <ion-icon name="eye-outline"></ion-icon>
+                <i class="fa-regular fa-eye"></i>
               </div>
 
-              <img
-                :src="project.image"
-                alt="finance"
-                loading="lazy"
-              />
+              <img :src="project.image" alt="finance" loading="lazy" />
             </figure>
             <h3 class="project-title">{{ project.title }}</h3>
             <p class="project-category">{{ project.category }}</p>
