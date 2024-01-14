@@ -15,7 +15,7 @@ export default {
     const fetchData = async () => {
       try {
         const response = await apiClient.get("/projects");
-        projects.value = response.data;
+        projects.value = response.data.data;
       } catch (e) {
         error.value = e;
       } finally {
@@ -87,16 +87,16 @@ export default {
           :class="{ 'project-item': true, active: filterProjects(project) }"
           :data-category="project.category"
         >
-          <a v-if="filterProjects(project)" href="#">
+          <a v-if="filterProjects(project)" :href=" project.url" target="blank">
             <figure class="project-img">
               <div class="project-item-icon-box">
                 <i class="fa-regular fa-eye"></i>
               </div>
 
-              <img :src="project.image" alt="finance" loading="lazy" />
+              <img :src="project.cover_photo" alt="finance" loading="lazy" />
             </figure>
             <h3 class="project-title">{{ project.title }}</h3>
-            <p class="project-category">{{ project.category }}</p>
+            <p class="project-category">{{ project.description }}</p>
           </a>
         </li>
       </ul>

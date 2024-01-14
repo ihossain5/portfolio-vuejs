@@ -10,7 +10,7 @@ const isButtonActive = ref(false);
 const fetchData = async () => {
   try {
     const response = await apiClient.get("/info");
-    data.value = response.data;
+    data.value = response.data.data;
   } catch (e) {
     error.value = e;
   } finally {

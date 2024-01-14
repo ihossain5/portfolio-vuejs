@@ -2,7 +2,7 @@
 import apiClient from "@/axios";
 import { ref } from "vue";
 
-const fullName = ref("");
+const name = ref("");
 const email = ref("");
 const message = ref("");
 const isSending = ref(false);
@@ -13,18 +13,19 @@ const sendMessage = async () => {
     isSending.value = true;
 
     const data = {
-      fullName: fullName.value,
+      name: name.value,
       email: email.value,
       message: message.value,
     };
 
     const response = await apiClient.post("/send-message", data);
 
-    fullName.value = "";
+    name.value = "";
     email.value = "";
     message.value = "";
     showToast.value = true;
   } catch (error) {
+    alert('something went wrong!please try again later')
     console.error("Error sending message:", error);
   } finally {
     isSending.value = false;
@@ -61,9 +62,9 @@ const closeToast = () => {
       <form @submit.prevent="sendMessage" class="form" data-form>
         <div class="input-wrapper">
           <input
-            v-model="fullName"
+            v-model="name"
             type="text"
-            name="fullname"
+            name="name"
             class="form-input"
             placeholder="Full name"
             required
