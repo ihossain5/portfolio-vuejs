@@ -1,7 +1,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import apiClient from "@/axios";
-
+import { ContentLoader } from "vue-content-loader";
 
 export default {
   setup() {
@@ -10,7 +10,6 @@ export default {
     const projects = ref({});
     const error = ref(null);
     const loading = ref(true);
-
 
     const fetchData = async () => {
       try {
@@ -23,11 +22,10 @@ export default {
       }
     };
 
-
     onMounted(() => {
       setTimeout(() => {
         fetchData();
-      });
+      },1000);
     });
 
     const selectCategory = (category) => {
@@ -46,7 +44,11 @@ export default {
       projects,
       selectCategory,
       filterProjects,
+      loading,
     };
+  },
+  components: {
+    ContentLoader,
   },
 };
 </script>
@@ -81,13 +83,30 @@ export default {
       </ul> -->
 
       <ul class="project-list">
+        <content-loader
+          v-if="loading"
+          :width="800"
+          :height="555"
+          :speed="2"
+          primary-color="#5e5c5c"
+          :secondary-color="'hsl(240, 2%, 12%)'"
+          viewBox="0 50 800 555"
+        >
+          <rect x="12" y="58" rx="2" ry="2" width="250" height="211" />
+          <rect x="275" y="57" rx="2" ry="2" width="250" height="211" />
+          <rect x="542" y="56" rx="2" ry="2" width="250" height="211" />
+          <rect x="12" y="283" rx="2" ry="2" width="250" height="211" />
+          <rect x="275" y="281" rx="2" ry="2" width="250" height="211" />
+          <rect x="542" y="279" rx="2" ry="2" width="250" height="211" />
+        </content-loader>
         <li
+          v-else
           v-for="project in projects"
           :key="project.title"
           :class="{ 'project-item': true, active: filterProjects(project) }"
           :data-category="project.category"
         >
-          <a v-if="filterProjects(project)" :href=" project.url" target="blank">
+          <a v-if="filterProjects(project)" :href="project.url" target="blank">
             <figure class="project-img">
               <div class="project-item-icon-box">
                 <i class="fa-regular fa-eye"></i>

@@ -94,13 +94,8 @@
   align-items: center;
 }
 @media (max-width: 768px) {
-  .timeline-list {
-    /* Add specific styling for smaller screens if needed */
-  }
-
-  /* Adjust the responsive styles for the content loader */
+  
   .timeline-item content-loader rect {
-    /* Example adjustments, customize as needed */
     x: 5%;
     width: 90%;
   }

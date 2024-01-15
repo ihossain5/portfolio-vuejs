@@ -27,7 +27,7 @@ onMounted(() => {
 
 <template>
   <section class="skill">
-    <h3 class="h3 skills-title">My skills</h3>
+    <h3 class="h3 skills-title">Skills</h3>
 
     <ul class="skills-list content-card">
       <li class="skills-item" v-if="loading">
