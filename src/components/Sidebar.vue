@@ -25,9 +25,7 @@ const toggle = () => {
 };
 
 onMounted(() => {
-  setTimeout(() => {
     fetchData();
-  }, 1000);
 });
 </script>
 

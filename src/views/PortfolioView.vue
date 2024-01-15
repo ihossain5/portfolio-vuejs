@@ -23,9 +23,7 @@ export default {
     };
 
     onMounted(() => {
-      setTimeout(() => {
         fetchData();
-      },1000);
     });
 
     const selectCategory = (category) => {

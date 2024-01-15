@@ -81,9 +81,7 @@
   };
   
   onMounted(() => {
-    setTimeout(() => {
       fetchExperienceData();
-    },1000);
   });
   </script>
   
